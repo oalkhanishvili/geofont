@@ -1,0 +1,171 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Test</title>
+	<link rel="stylesheet" href="styles.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+	<header>
+		<a id="bold">Bold</a>
+		<a id="italic">Italic</a>
+		<a id="underline">Underline</a>
+		<a id="reset" class="active">Font</a>
+		<a class="sep"></a>
+		<span>
+			<a class="font-size active">9px</a>
+			<a class="font-size">10px</a>
+			<a class="font-size">11px</a>
+			<a class="font-size">12px</a>
+			<a class="font-size">13px</a>
+			<a class="font-size">14px</a>
+			<a class="font-size">15px</a>
+			<a class="font-size">16px</a>
+			<a class="font-size">18px</a>
+			<a class="font-size">21px</a>
+			<a class="font-size">24px</a>
+			<a class="font-size">30px</a>
+		</span>
+	</header>
+	<div class="attach_wrp">
+		<p>დამატებული ფონტები:<span>0</span></p>
+		<select name="" id="fonts"><option value="" selected>--Select--</option></select>
+		<input style="content:url('http://www.w3.org/2000/svg');" type="file" id="theFile" />
+	</div>
+
+	<section style="font-size: 9px">
+
+
+		<h4>9px</h4>
+		<div class="otf">
+			THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG<br>
+			The quick brown fox jumps over the lazy dog<br>
+			ჩვენთვის გაბსაკუთრებული მნიშვნელობა ჰქონდა ჩინური სათამაშოების ზამბარებს ანუ პრუჟინებს, გაფუჭებულ სათამაშოს ასაწყობად მრავალჯერადი ცდა არ იყო საკმარისი, ამას განსაკუთრებული ცოდნა და ჩალიჩი სჭირდებოდა. ჯერ კიდევ 1990–იანი წლების გარიჟრაჟზე, როცა ჰაერში ჯერ კიდევ დენთის ბოლი იდგა, ეფლმა გადაწყვიტა ახალი პროდუქტი გამოეშვა, ამის მერე ბავშვები ჩინური სათამაშოებით აღარ ერთობოდნენ. სტივ ჯობსის თქმით ამ დროს დაიწტო ახალი ერა ჩვენს სამყაროში, ბავშვბს საჭმელიც აღარ ახსოვდათ, ძალიან გასაკვირია და არც ჟოლოს კანფეტები (რა შუაშია მაგრამ მაინც). 20 წლისშემდეგ ალბათ ჩვენც ხვანაირად შევხედავთ ყველაფერს, ჰაერიც სხვანაირი იქნება და ნიჟარებიც ზღვაზე რომ ყრია, აღარ დაგვხვდება იქ, სადაც ყოველთვის ვეძებდით.
+		</div>
+		<div class="otf">
+			აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰჱჲჳჴჵჶჷჸჹჺ<br />
+			ႠႡႢႣႤႥႦႧႨႩႪႫႬႭႮႯႰႱႲႳႴႵႶႷႸႹႺႻႼႽႾႿჀჁჂჃჄჅ<br />
+			ⴀⴁⴂⴃⴄⴅⴆⴇⴈⴉⴊⴋⴌⴍⴎⴏⴐⴑⴒⴓⴔⴕⴖⴗⴘⴙⴚⴛⴜⴝⴞⴟⴠⴡⴢⴣⴤⴥ<br />
+			჻ჼ
+		</div>
+	</section>
+
+	<div class="clearfix"></div>
+
+	<script src="jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	var App = function(){
+		var getFileName = function (){
+			var path,name,files,arr = [],parseType,type;
+			$('#theFile').on('change', function (event) {
+					files = event.target.files[0];
+					parseType = files.name.split('.'), type = parseType[parseType.length-1].toLowerCase();
+					if (type == 'ttf' || type == 'eot' || type == 'otf' || type == 'woff' || type == 'woff2'){
+						name = files.name;
+						if(_checkIfExists.call(this,name,arr)) {return};
+						path = URL.createObjectURL(files);
+						var elem = document.createElement('option');
+						elem.textContent = name;
+						elem.dataset.path = path;
+						$('#fonts').append(elem);
+						_selectedFontCount();
+						_attachClick();
+					}else{
+						alert('არასწორი ფორმატი.უნდა იყოს:ttf,otf,eot,woff,woff2');
+					}
+				});
+		};
+		var _selectedFontCount = function(){
+			var el = document.getElementById('fonts'),
+					size = Number(el.length-1);
+			$('.attach_wrp p > span').text(size);
+		};
+		var _checkIfExists = function(name,arr){
+			if (arr.indexOf(name) > -1){
+				alert('მსგავსი სახელით'+name+' ფონტი უკვე დამატებულია');
+				return true;
+			}
+			arr.push(name);
+		};
+		var _attachClick = function(){
+			$('#fonts').on('change',function(e){
+				if(this.selectedIndex === 0){return;}
+				$this = $(this.options[this.selectedIndex]);
+				var path = $this.data('path');
+				var name = 'test';
+				$('style').remove();
+				var newStyle = document.createElement('style');
+				newStyle.appendChild(document.createTextNode('\
+				@font-face{\
+					font-family:'+name+';\
+					src:url("'+path+'");\
+					font-style: normal;\
+					font-weight: normal;\
+				}\
+				'));
+				document.head.appendChild(newStyle);
+				$('.otf').css('font-family','"'+name+'"');
+			});
+		};
+		return {
+			addButton:getFileName
+		};
+	};
+	var ev = new App();
+	ev.addButton();
+	//
+
+	$(function(){
+
+
+		$("#bold").toggle(function(){
+			$(this).addClass("active");
+			$("section > div").css("font-weight", "bold");
+		}, function(){
+			$(this).removeClass("active");
+			$("section > div").css("font-weight", "normal");
+		})
+
+		$("#italic").toggle(function(){
+			$(this).addClass("active");
+			$("section > div").css("font-style", "italic");
+		}, function(){
+			$(this).removeClass("active");
+			$("section > div").css("font-style", "normal");
+		})
+
+		$("#underline").toggle(function(){
+			$(this).addClass("active");
+			$("section > div").css("text-decoration", "underline");
+		}, function(){
+			$(this).removeClass("active");
+			$("section > div").css("text-decoration", "none");
+		})
+
+		$("#reset").click(function(){
+			$(this).removeClass("active");
+			$("section > div").removeClass("ttf otf");
+		})
+
+		$("#tt").toggle(function(){
+			$(this).html("OTF");
+			$("#reset").addClass("active");
+			$("section > div").addClass("otf").removeClass("ttf");
+		}, function(){
+			$(this).html("TTF");
+			$("#reset").addClass("active");
+			$("section > div").addClass("ttf").removeClass("otf");
+		})
+
+		$(".font-size").hover(function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			takeSizeH = $(this).html();
+			takeSize = parseInt($(this).html());
+			$("section > div").css("font-size", takeSize);
+			$("section > h4").html(takeSizeH);
+
+		})
+	})
+	</script>
+</body>
+</html>
