@@ -59,15 +59,14 @@ header > span > a.font-size {
 header > span > a.font-size.active {
 	background: #111;
 }
-
 .sep {
 	background: transparent;
 	width: 130px;
 }
 .attach_wrp{
-	width: 1000px;
-	margin: 0 auto;
-	padding: 0 40px;
+	display:block;
+	width:100%;
+	float:right;
 }
 section {
 	width: 1000px;
@@ -109,10 +108,10 @@ section > div:nth-child(2) {
 	display:none;
 }
 #theFile::before {
-	content: 'Select fonts'; 
+	content: 'Select fonts';
 	display: inline-block;
 	color:#fff;
-	background: -webkit-linear-gradient(top, #888888, #112233);
+	background: -webkit-linear-gradient(top, #111111, #9E9D9E);
 	border: 1px solid #999;
 	border-radius: 3px;
 	padding: 5px 8px;
@@ -122,7 +121,6 @@ section > div:nth-child(2) {
 	cursor: pointer;
 	font-weight: 700;
 	font-size: 8pt;
-
 }
 #theFile:hover::before {
 	border-color: black;
@@ -132,6 +130,6 @@ section > div:nth-child(2) {
 	outline:0;
 }
 #theFile:active::before {
-	background: -webkit-linear-gradient(top, #888888, #112233);
+	background: -webkit-linear-gradient(top, #9E9D9E, #111111);
 }
 /*-----------*/
